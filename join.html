@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Join Us — Control and Intelligent Systems Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=2">
+<style>
+  .req-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(230px,1fr)); gap:20px;}
+  .req-card{padding:22px 20px 52px 20px; position:relative; background:var(--bg);}
+  .req-card h3{font-size:18px; margin-bottom:6px;}
+  .req-card p{font-size:14px; margin:0; color:var(--ink-mid); text-align:justify;}
+  .req-btn{position:absolute; right:16px; bottom:14px; font-family:var(--body); font-weight:600; font-size:12.5px; color:#fff; background:var(--ink); padding:6px 14px; border-radius:20px; text-decoration:none; transition:background .15s ease;}
+  .req-btn:hover{background:var(--blue); text-decoration:none;}
+  .req-btns{position:absolute; right:16px; bottom:14px; left:16px; display:flex; flex-wrap:wrap; justify-content:flex-end; gap:8px;}
+  .req-btns .req-btn{position:static;}
+  .hiring-flag{position:absolute; top:-10px; right:-8px; font-family:var(--mono); font-size:10px; text-transform:uppercase; letter-spacing:0.05em; color:var(--gold); background:var(--gold-soft); padding:4px 10px; border-radius:12px; border:1px solid var(--surface); box-shadow:0 1px 3px rgba(0,0,0,0.08);}
+
+  .contact-card{padding:36px; display:grid; grid-template-columns:1fr auto; gap:24px; align-items:center;}
+  .contact-card dl{display:grid; grid-template-columns:auto 1fr; gap:8px 16px; margin:0;}
+  .contact-card dt{font-family:var(--mono); font-size:12px; color:var(--ink-soft); padding-top:2px;}
+  .contact-card dd{margin:0; font-size:15px; color:var(--ink);}
+
+  .location{display:grid; grid-template-columns:710px 1fr; grid-auto-rows:170px; gap:32px; align-items:stretch;}
+  .location > .card{height:100%; overflow:hidden; box-sizing:border-box;}
+  .loc-card{padding:14px 26px; width:100%;}
+  .loc-card dl{display:grid; grid-template-columns:auto 1fr; gap:10px 20px; margin:10px 0 0 0; line-height:1.3; white-space:nowrap;}
+  .loc-card dt{font-family:var(--mono); font-size:13px; color:var(--ink-soft); padding-top:2px;}
+  .loc-card dd{margin:0; font-size:15.5px; color:var(--ink);}
+  .map-frame{ height:100%; display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(160deg, var(--blue-soft), var(--surface)); color:var(--ink-soft);
+    font-family:var(--mono); font-size:12px; text-align:center; padding:20px;}
+
+  .page-header{padding-bottom:24px;}
+
+  @media (max-width:860px){
+    .req-grid{grid-template-columns:1fr;}
+    .contact-card{grid-template-columns:1fr;}
+    .location{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <img src="assets/logo/logo-brain.png" alt="" width="30" height="26" class="brand-mark">
+      <span class="brand-text">
+        <span>Control and Intelligent Systems Lab</span>
+        <span class="brand-sub">UC Berkeley · EECS</span>
+      </span>
+    </a>
+    <button class="nav-toggle" aria-label="Toggle menu"><span></span></button>
+    <ul class="navlinks">
+      <li><a href="index.html">Welcome</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="activities.html">Activities</a></li>
+      <li><a href="team.html">People</a></li>
+      <li><a class="active" href="join.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="wrap">
+    <h1>Thank you for your interest!</h1>
+    <p>We receive a high volume of inquiries. To make sure we go through all of them, we have set up different contact paths for common requests and inquiries. Read below to see which one best fits you!</p>
+    <p style="font-size:14px; color:var(--ink-soft); margin-top:12px; max-width:112.5ch;"><em>Please note that we cannot personally respond to all the inquiries that we receive. If you follow the paths below, rest assured that your inquiry has been received. We will be in touch if there is matching interest and availability!</em></p>
+  </div>
+</header>
+
+<hr class="divider">
+
+<section style="background:var(--surface); padding:28px 0 16px 0;">
+  <div class="wrap">
+    <div class="section-head reveal" style="margin-bottom:12px;">
+      <h2 style="font-family:var(--display); font-size:40px; color:var(--ink);">Join us!</h2>
+    </div>
+    <div class="req-grid reveal">
+      <div class="card req-card">
+        <h3>Postdocs</h3>
+        <p style="text-align:justify;">We are not recruiting postdocs at the moment. If you send us your CV, we will reach out if a good-fit position opens up!</p>
+
+<a href="https://flying-lark-dc5.notion.site/ceed4abdf26a4f04a19d24cff2583e99?pvs=105" target="_blank" rel="noopener" class="req-btn">Send us your CV</a>
+      </div>
+      <div class="card req-card" style="padding-bottom:22px; position:relative;">
+        <span class="hiring-flag">We're hiring!</span>
+        <h3>Graduate students</h3>
+        <p style="text-align:justify;">Apply directly to the <a href="https://eecs.berkeley.edu/academics/graduate/research-programs/admissions/" target="_blank" rel="noopener">Berkeley EECS Ph.D. program</a> and mention Prof. Amo Alonso as a potential advisor in your application.</p>
+        <p style="margin-top:10px; text-align:justify;"><strong>If applying in the fall of 2026, email <a href="mailto:camoalon@berkeley.edu">Prof. Amo Alonso</a> to discuss opportunities.</strong></p>
+      </div>
+      <div class="card req-card">
+        <h3>Undergrad students</h3>
+        <p style="text-align:justify;">If you are at UC Berkeley, share your transcript, CV, and projects that you are interested in! If we have a good fit, we will reach out to you.</p>
+
+        <a href="https://flying-lark-dc5.notion.site/fc2a29177efa4570855e1b53649bfbfc?pvs=105" target="_blank" rel="noopener" class="req-btn">Apply!</a>
+      </div>
+      <div class="card req-card">
+        <h3>Visitors</h3>
+        <p style="text-align:justify;">Share your CV, two recommenders, and research interests that overlap with the lab. If we have the availability to host you, we will reach out!</p>
+
+        <a href="https://flying-lark-dc5.notion.site/ad42664601474ef29727076bde30b3a2?pvs=105" target="_blank" rel="noopener" class="req-btn">Apply!</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--surface); padding:16px 0 28px 0;">
+  <div class="wrap">
+    <div class="section-head reveal" style="margin-bottom:12px;">
+      <h2 style="font-family:var(--display); font-size:40px; color:var(--ink);">Other requests</h2>
+    </div>
+    <div class="req-grid reveal">
+      <div class="card req-card" style="background:var(--surface);">
+        <h3>Opportunities</h3>
+        <p style="text-align:justify;">If broadly interested in our research and would like to propose potential academic or industry collaborations, invited talks, media inquiries, conference organizing, or public outreach, please let us know and include relevant details.</p>
+
+        <a href="https://flying-lark-dc5.notion.site/751f5b85f62b4b0793c52ff70946dabb?pvs=105" target="_blank" rel="noopener" class="req-btn">Reach out!</a>
+      </div>
+      <div class="card req-card" style="background:var(--surface);">
+        <h3>Resource access</h3>
+        <p style="text-align:justify;">We publish openly on arXiv, and make our code available on GitHub. Our papers are often accompanied by a video summary, available on our YouTube channel. For specific requests about a paper, please contact the corresponding author directly.</p>
+
+        <div class="req-btns">
+          <a href="research.html#publications" class="req-btn">Publications</a>
+          <a href="https://github.com/camoalon" data-social="github" target="_blank" rel="noopener" class="req-btn">Code</a>
+          <a href="#" data-social="youtube" target="_blank" rel="noopener" class="req-btn">Videos</a>
+        </div>
+      </div>
+      <div class="card req-card" style="background:var(--surface);">
+        <h3>Miscellaneous</h3>
+        <p style="text-align:justify;">If your request doesn't fit any of the above, you can contact us here. Notice that your request will be visible to all core members of the lab to expedite a response. For sensitive requests, please email Prof. Amo Alonso or a lab member individually.</p>
+
+        <a href="https://flying-lark-dc5.notion.site/3cf6b721daa246d685a69c5d8c556cca?pvs=105" target="_blank" rel="noopener" class="req-btn">Contact us!</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="location" style="background:var(--surface); padding:16px 0 40px 0;">
+  <div class="wrap">
+    <div class="reveal" style="margin-bottom:16px;">
+      <h2 style="font-family:var(--display); font-size:40px; color:var(--ink);">Mail &amp; deliveries</h2>
+    </div>
+    <div class="location reveal">
+      <div class="card loc-card">
+        <dl>
+          <dt>Building</dt><dd>Cory Hall, UC Berkeley</dd>
+          <dt>Address</dt><dd>Berkeley, CA 94720</dd>
+          <dt>Department</dt><dd>Electrical Engineering &amp; Computer Sciences</dd>
+          <dt>College</dt><dd>College&nbsp;of Engineering &amp; College&nbsp;of Computing, Data Science, and Society</dd>
+        </dl>
+      </div>
+      <div class="card map-frame" style="padding:0; overflow:hidden;">
+        <iframe src="https://maps.google.com/maps?q=Cory+Hall,+Berkeley,+CA+94720&output=embed" style="width:100%; height:100%; border:0; display:block;" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Map to Cory Hall, UC Berkeley"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="brand">
+        <img src="assets/logo/logo-brain.png" alt="" width="30" height="26" class="brand-mark">
+        <span class="brand-text">
+          <span>Control and Intelligent Systems Lab</span>
+          <a class="brand-sub" href="https://eecs.berkeley.edu" target="_blank" rel="noopener">UC Berkeley · EECS</a>
+        </span>
+      </div>
+      <ul class="footer-links">
+        <li><a href="https://github.com/camoalon" data-social="github" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="#" data-social="youtube" target="_blank" rel="noopener">YouTube</a></li>
+        <li><a href="join.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-fine">© 2026 Control and Intelligent Systems Lab, UC Berkeley. The use of any content on this site for training generative models is not authorized.</div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

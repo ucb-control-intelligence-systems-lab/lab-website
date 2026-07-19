@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Activities — Control and Intelligent Systems Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=2">
+<style>
+  .activity-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:24px;}
+  .activity-card{padding:28px 26px; background:var(--bg);}
+  .activity-card .tag{font-family:var(--mono); font-size:11px; color:var(--blue); text-transform:uppercase; letter-spacing:0.06em;}
+  .activity-card h3{font-family:Georgia, 'Times New Roman', serif; font-weight:600; font-size:15px; margin:10px 0 10px 0; color:var(--ink);}
+  .activity-card p{font-size:14.5px; text-align:justify; margin:0;}
+  .activity-card ul{margin:8px 0 0 0; padding:10px 12px 10px 28px; max-height:150px; overflow-y:auto; background:var(--surface); border:1px solid var(--line); border-radius:10px;}
+  .activity-card ul::-webkit-scrollbar{width:6px;}
+  .activity-card ul::-webkit-scrollbar-thumb{background:var(--line); border-radius:3px;}
+  .activity-card li{margin-top:8px;}
+  .activity-card li:first-child{margin-top:0;}
+  .activity-card li .wk-title{font-family:var(--mono); font-size:12.5px; color:var(--ink-mid);}
+  .activity-card li .wk-title a{color:var(--blue);}
+  .activity-card li .wk-title a:hover{text-decoration:underline;}
+  .activity-card li .wk-meta{font-family:var(--mono); font-size:11px; color:var(--ink-soft); margin-top:2px;}
+
+  .timeline{list-style:none; margin:0; padding:0; border-top:1px solid var(--line);}
+  .tl-item{display:grid; grid-template-columns:110px 1fr; gap:24px; padding:20px 28px; border-bottom:1px solid var(--line);}
+  .timeline li:nth-child(odd){background:var(--bg);}
+  .timeline li:nth-child(even){background:var(--surface);}
+  .tl-date{font-family:var(--mono); font-size:13px; color:var(--ink-soft); padding-top:2px;}
+  .tl-body p{margin:0; font-size:15.5px; color:var(--ink-mid); text-align:justify;}
+  .tl-body strong{color:var(--ink); font-weight:600;}
+  .pin-tag{display:inline-block; vertical-align:-2px; margin-left:2px; color:var(--ink-soft); transform:rotate(20deg);}
+
+  .page-header{padding-bottom:24px;}
+  .page-header p{text-align:justify;}
+
+  @media (max-width:860px){ .activity-grid{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <img src="assets/logo/logo-brain.png" alt="" width="30" height="26" class="brand-mark">
+      <span class="brand-text">
+        <span>Control and Intelligent Systems Lab</span>
+        <span class="brand-sub">UC Berkeley · EECS</span>
+      </span>
+    </a>
+    <button class="nav-toggle" aria-label="Toggle menu"><span></span></button>
+    <ul class="navlinks">
+      <li><a href="index.html">Welcome</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a class="active" href="activities.html">Activities</a></li>
+      <li><a href="team.html">People</a></li>
+      <li><a href="join.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="wrap">
+    <h1>The gigs beyond the papers</h1>
+    <p>We are committed to serving society in multiple ways. As members of an academic institution, we participate in teaching at <a href="https://eecs.berkeley.edu" target="_blank" rel="noopener">UC Berkeley</a> as well as outreach activities. While doing these, we learn a lot too: everyone has something to teach us! We also regularly participate in seminars and organize interdisciplinary workshops. We believe ideas are stronger when they are shared and put in conversation with others, inside and outside the lab. In that spirit, below you will find what we are currently up to, plus a running log of recent milestones.</p>
+  </div>
+</header>
+
+<hr class="divider">
+
+<section style="background:var(--surface); padding:28px 0 16px 0;">
+  <div class="wrap">
+    <div class="section-head reveal" style="margin-bottom:12px;">
+      <h2 style="font-family:var(--display); font-size:40px; color:var(--ink);">Ongoing activities</h2>
+    </div>
+    <div class="activity-grid reveal">
+      <div class="card activity-card">
+        <div class="tag" style="font-family:var(--display); font-weight:700; font-size:24px; color:var(--ink); text-transform:none; letter-spacing:-0.005em; margin-bottom:6px;">Educational Service</div>
+        <h4 style="font-family:Georgia, 'Times New Roman', serif; font-weight:600; font-size:15px; margin:10px 0 10px 0; color:var(--ink);">Institutional Teaching</h4>
+        <p style="margin-top:6px;"><a href="https://camoalon.github.io/" target="_blank" rel="noopener">Prof. Amo Alonso</a> teaches undergraduate and graduate courses at <a href="https://eecs.berkeley.edu/academics/courses/" target="_blank" rel="noopener">UC Berkeley EECS</a>.</p>
+        <h4 style="font-family:Georgia, 'Times New Roman', serif; font-weight:600; font-size:15px; margin:16px 0 0 0; color:var(--ink);">Outreach Activities</h4>
+        <p style="margin-top:6px;">We are committed to bringing research-level science to underserved communities across different countries:</p>
+        <ul>
+          <li><div class="wk-title"><a href="https://clubesdeciencia.mx" target="_blank" rel="noopener">Clubes de Ciencia</a></div><div class="wk-meta">Peru, 2026</div><div class="wk-meta">Mexico, 2023 - <a href="https://sites.google.com/view/hablando-con-la-maquina-cdcmx/miembros-del-club?authuser=1" target="_blank" rel="noopener">see the work!</a></div></li>
+          <li><div class="wk-title">High School Visits</div><div class="wk-meta">Underserved communities</div></li>
+        </ul>
+      </div>
+      <div class="card activity-card">
+        <div class="tag" style="font-family:var(--display); font-weight:700; font-size:24px; color:var(--ink); text-transform:none; letter-spacing:-0.005em; margin-bottom:6px;">Academic Service</div>
+        <h3>Workshop Organization</h3>
+        <p>We organize workshops in machine learning as well as control venues to promote the intersection between control theory and AI:</p>
+        <ul>
+          <li><div class="wk-title"><a href="https://sites.google.com/view/cdc2025-llms/home" target="_blank" rel="noopener">Large Language Models and Control</a></div><div class="wk-meta">CDC, 2025</div></li>
+          <li><div class="wk-title"><a href="https://icml.cc/virtual/2024/workshop/29962" target="_blank" rel="noopener">Next Generation of Sequence Modeling Architectures</a></div><div class="wk-meta">ICML, 2024</div></li>
+        </ul>
+        <h4 style="font-family:Georgia, 'Times New Roman', serif; font-weight:600; font-size:15px; margin:16px 0 0 0; color:var(--ink);">Interdisciplinary Seminars</h4>
+        <p style="margin-top:6px;">We are honored to regularly participate in interdisciplinary workshops such as:</p>
+        <ul>
+          <li><div class="wk-title"><a href="https://sites.google.com/view/telluride-2026/topic-areas/neuroai-discussion-group?authuser=0" target="_blank" rel="noopener">NeuroAI Discussion Group</a></div><div class="wk-meta">Telluride Neuromorphic Cognition Engineering Workshop, 2026</div></li>
+          <li><div class="wk-title"><a href="https://arxiv.org/abs/2604.18637" target="_blank" rel="noopener">NeuroAI and Beyond</a></div><div class="wk-meta">NSF Workshop, 2025</div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--surface); padding:16px 0 40px 0;">
+  <div class="wrap">
+    <div class="section-head reveal" style="margin-bottom:12px;">
+      <h2 style="font-family:var(--display); font-size:40px; color:var(--ink);">Recent news</h2>
+    </div>
+    <ul class="timeline reveal">
+      <!-- Pinned: keep this item first. Add new news entries below it, not above. -->
+      <li class="tl-item pinned">
+        <div class="tl-date">2026 May <svg class="pin-tag" width="14" height="18" viewBox="0 0 384 560" fill="currentColor"><path d="M32 32C32 14.3 46.3 0 64 0H320c17.7 0 32 14.3 32 32s-14.3 32-32 32h-3.6L302.5 210.8c36.7 20.7 65.9 53.2 82 92.5c3.9 9.9 6 20.6 6 31.3v4.7c0 8.8-7.2 16-16 16H16c-8.8 0-16-7.2-16-16v-4.7c0-10.7 2.2-21.4 6-31.3c16.1-39.3 45.3-71.8 82-92.5L67.6 64H64C46.3 64 32 49.7 32 32zM192 288c-13.3 0-24 10.7-24 24v200c0 13.3 10.7 24 24 24s24-10.7 24-24V312c0-13.3-10.7-24-24-24z"></path></svg></div>
+        <div class="tl-body"><p>The <strong>Control and Intelligent Systems Lab</strong> will start at <a href="https://www.berkeley.edu" target="_blank" rel="noopener">UC Berkeley</a> in 2027! <a href="join.html">Reach out</a> if you are interested in joining us!</p></div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<hr class="divider">
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="brand">
+        <img src="assets/logo/logo-brain.png" alt="" width="30" height="26" class="brand-mark">
+        <span class="brand-text">
+          <span>Control and Intelligent Systems Lab</span>
+          <a class="brand-sub" href="https://eecs.berkeley.edu" target="_blank" rel="noopener">UC Berkeley · EECS</a>
+        </span>
+      </div>
+      <ul class="footer-links">
+        <li><a href="https://github.com/camoalon" data-social="github" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="#" data-social="youtube" target="_blank" rel="noopener">YouTube</a></li>
+        <li><a href="join.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-fine">© 2026 Control and Intelligent Systems Lab, UC Berkeley. The use of any content on this site for training generative models is not authorized.</div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

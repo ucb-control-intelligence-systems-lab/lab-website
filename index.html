@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Control and Intelligent Systems Lab — UC Berkeley EECS</title>
+<meta name="description" content="Control and Intelligent Systems Lab at UC Berkeley EECS. We use control theory to make AI systems predictable, steerable, and safe.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=2">
+<style>
+  .hero{padding:0;}
+  .hero-grid{display:grid; grid-template-columns:1fr 1.2fr; gap:48px; align-items:stretch; min-height:380px; width:100%;}
+  .hero-text{display:flex; flex-direction:column; justify-content:center;
+    padding:36px 0 36px max(32px, calc((100vw - 1120px)/2 + 32px));}
+  .hero h1{font-size:clamp(30px,4.4vw,49px); line-height:1.1; max-width:26ch; font-family:'Baloo 2', sans-serif;}
+  .hero h1 .hl{color:var(--blue);}
+  .hero .lede{font-size:18.5px; max-width:56ch; margin-top:20px; text-align:justify;}
+  .hero-cta{display:flex; justify-content:space-between; font-size:17px; max-width:90ch; margin-top:40px;}
+  .hero-cta .btn{background:var(--ink); color:var(--surface); border:1px solid var(--ink);
+    text-align:center; padding:14px 34px;}
+  .hero-cta .btn:hover{background:var(--blue); border-color:var(--blue);}
+  #mission{padding-top:20px; padding-bottom:40px;}
+
+  .hero-carousel{position:relative; overflow:hidden;}
+  .carousel{position:absolute; inset:0;}
+  .carousel-track{position:relative; height:100%;}
+  .carousel-slide{position:absolute; inset:0; height:100%; overflow:hidden; display:none;}
+  .carousel-slide.active{display:block;}
+  .slide-media{position:absolute; inset:0;}
+  .slide-media img, .slide-media video{width:100%; height:100%; object-fit:cover; display:block;}
+  .slide-bar{position:absolute; left:0; right:0; bottom:0; margin:0; z-index:2;
+    padding:60px 90px 22px 30px; font-family:'Source Serif 4', Georgia, serif; font-size:17px; font-weight:600; line-height:1.45; color:#fff;
+    background:linear-gradient(to top, rgba(18,20,26,0.85) 0%, rgba(18,20,26,0.55) 45%, rgba(18,20,26,0) 100%);}
+  .slide-bar strong{font-weight:600;}
+  .slide-credit{position:absolute; right:6px; bottom:6px; margin:0; z-index:2;
+    font-size:9px; font-weight:400; letter-spacing:0.02em; line-height:1.4;
+    text-align:right; color:rgba(255,255,255,0.55); pointer-events:none;}
+
+  .slide-link{position:absolute; z-index:2; cursor:pointer; border-radius:2px; transition:background .15s ease, box-shadow .15s ease;}
+  .slide-link:hover, .slide-link:focus-visible{background:rgba(43,63,107,0.12); box-shadow:inset 0 0 0 1.5px rgba(43,63,107,0.55);}
+
+  .carousel-dots{position:absolute; right:22px; bottom:20px; display:flex; gap:7px; z-index:3;
+    background:rgba(20,22,28,0.4); backdrop-filter:blur(4px); padding:7px 9px; border-radius:999px;}
+  .carousel-dots .dot{width:7px; height:7px; border-radius:999px; border:none; background:rgba(255,255,255,0.45); padding:0; cursor:pointer;}
+  .carousel-dots .dot.active{background:#fff;}
+
+  @media (max-width: 860px){
+    .hero-grid{grid-template-columns:1fr; min-height:0; gap:0;}
+    .hero-text{padding:56px 32px 32px 32px;}
+    .hero-carousel{height:70vh; min-height:460px;}
+  }
+
+  .parable{background:var(--surface); border-bottom:1px solid var(--line);}
+  .parable-grid{display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center;}
+  .parable-text p{font-size:16.5px; max-width:58ch;}
+  .parable-text p strong{color:var(--ink);}
+  .flight-frame{ padding:22px; }
+  .flight-caption{font-family:var(--mono); font-size:11.5px; color:var(--ink-soft); text-align:center; margin-top:6px;}
+
+  .pillars{display:grid; grid-template-columns:repeat(4,1fr); gap:24px;}
+  .pillar{padding:28px 22px; border-top:3px solid var(--blue);}
+  .pillar .num{font-family:var(--mono); font-size:12px; color:var(--gold);}
+  .pillar h3{font-size:19px; margin:10px 0 10px 0;}
+  .pillar p{font-size:14.5px; margin:0;}
+
+  @media (max-width: 860px){
+    .parable-grid{grid-template-columns:1fr;}
+    .pillars{grid-template-columns:1fr 1fr;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <img src="assets/logo/logo-brain.png" alt="" width="30" height="26" class="brand-mark">
+      <span class="brand-text">
+        <span>Control and Intelligent Systems Lab</span>
+        <span class="brand-sub">UC Berkeley · EECS</span>
+      </span>
+    </a>
+    <button class="nav-toggle" aria-label="Toggle menu"><span></span></button>
+    <ul class="navlinks">
+      <li><a class="active" href="index.html">Welcome</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="activities.html">Activities</a></li>
+      <li><a href="team.html">People</a></li>
+      <li><a href="join.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-grid">
+    <div class="hero-text">
+      <h1>We design and build <span class="hl">Controllable AI</span>: intelligent systems that we can control</h1>
+      <p class="lede">The Control and Intelligent Systems Lab studies artificial intelligence through the lens of control theory: treating generative models as dynamical systems that can be understood, principally designed, and controlled with the same rigor and reliability we have in other engineering disciplines.</p>
+    </div>
+    <div class="hero-carousel reveal">
+      <div class="carousel" id="hero-carousel">
+        <div class="carousel-track">
+          <div class="carousel-slide" data-duration="5000">
+            <div class="slide-media">
+              <img src="assets/hero-slider/0.jpg" alt="Archival photo of an early aircraft on the ground after a hard landing">
+            </div>
+            <p class="slide-bar" style="font-weight:400;"><strong>Artificial intelligence promises to change the world</strong>; and that's no surprise! History has many examples where engineering turns impossible problems into world-changing innovations.</p>
+            <p class="slide-credit">Source: National Archives Catalog</p>
+          </div>
+          <div class="carousel-slide">
+            <div class="slide-media">
+              <video src="assets/hero-slider/1.mp4" muted playsinline preload="auto"></video>
+            </div>
+            <p class="slide-bar" style="font-weight:400;">Just like intelligence, flight was seen as an incredibly hard problem.<br>Yet early planes were already doing what seemed impossible: they were <strong>lifting off the ground!</strong></p>
+            <p class="slide-credit">Source: National Archives Catalog</p>
+          </div>
+          <div class="carousel-slide">
+            <div class="slide-media">
+              <img src="assets/hero-slider/1bis.jpeg" alt="Archival photo of early flight testing">
+            </div>
+            <a class="slide-link" style="left:16.9%; top:28.4%; width:46.5%; height:19.3%;" href="https://www.foxnews.com/tech/robots-take-wheel-san-francisco-opens-streets-driverless-taxis" target="_blank" rel="noopener" aria-label="Read: Robots take the wheel as San Francisco opens streets to driverless taxis (Fox News)"></a>
+            <a class="slide-link" style="left:36.5%; top:52.2%; width:46.6%; height:19.3%;" href="https://news.mit.edu/2025/using-generative-ai-researchers-design-compounds-kill-drug-resistant-bacteria-0814" target="_blank" rel="noopener" aria-label="Read: Using generative AI, researchers design compounds that can kill drug-resistant bacteria (MIT News)"></a>
+            <p class="slide-bar" style="font-weight:400;"><strong>In AI we are seeing a liftoff too!</strong> Current innovations are making astonishing progress in technology, health, and society.</p>
+            <p class="slide-credit">Source: National Archives Catalog</p>
+          </div>
+          <div class="carousel-slide">
+            <div class="slide-media">
+              <video src="assets/hero-slider/2.mp4" muted playsinline preload="auto"></video>
+            </div>
+            <p class="slide-bar" style="font-weight:400;">But just like early planes sometimes <strong>crashed</strong>…</p>
+            <p class="slide-credit">Source: National Archives Catalog</p>
+          </div>
+          <div class="carousel-slide">
+            <div class="slide-media">
+              <img src="assets/hero-slider/2bis.jpeg" alt="Archival photo of early flight testing">
+            </div>
+            <a class="slide-link" style="left:16.8%; top:6.8%; width:46.6%; height:19.3%;" href="https://www.nytimes.com/2018/03/19/technology/uber-driverless-fatality.html" target="_blank" rel="noopener" aria-label="Read: Self-Driving Uber Car Kills Pedestrian in Arizona, Where Robots Roam (The New York Times)"></a>
+            <a class="slide-link" style="left:35.5%; top:30.6%; width:48.6%; height:19.3%;" href="https://www.statnews.com/2018/07/25/ibm-watson-recommended-unsafe-incorrect-treatments/" target="_blank" rel="noopener" aria-label="Read: IBM's Watson supercomputer recommended 'unsafe and incorrect' cancer treatments (STAT News)"></a>
+            <p class="slide-bar" style="font-weight:400;">Failures in current AI systems can also pose <strong>significant risks</strong>.</p>
+            <p class="slide-credit">Source: National Archives Catalog</p>
+          </div>
+          <div class="carousel-slide">
+            <div class="slide-media">
+              <img src="assets/hero-slider/pre3.jpeg" alt="Archival photo of early flight testing">
+            </div>
+            <a class="slide-link" style="left:19.4%; top:4.8%; width:61.2%; height:29.5%;" href="https://www.loc.gov/resource/mss46706.05001168/?sp=3&r=-0.057,0.107,1.026,0.54,0" target="_blank" rel="noopener" aria-label="View source: Wilbur Wright quote, Library of Congress"></a>
+            <p class="slide-bar" style="font-weight:400;">Thankfully, <strong>we have solved this problem before!</strong> In engineering, we know that flying most of the time is not enough. Aviation became paradigm-shifting once we learned to <strong>control</strong> the aircraft.</p>
+            <p class="slide-credit">Source: National Archives Catalog, Library of Congress</p>
+          </div>
+          <div class="carousel-slide">
+            <div class="slide-media">
+              <video src="assets/hero-slider/3.mp4" muted playsinline preload="auto"></video>
+            </div>
+            <p class="slide-bar" style="font-weight:400;"><strong>The same will be true about AI!</strong> Similar to the pilot, we celebrate how far AI has come. And to take it to the last mile, we draw upon the <strong>principles of control theory</strong> to create <strong>Controllable AI</strong>.</p>
+            <p class="slide-credit">Source: National Archives Catalog</p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-dots">
+        <button class="dot" data-index="0" aria-label="Slide 1"></button>
+        <button class="dot" data-index="1" aria-label="Slide 2"></button>
+        <button class="dot" data-index="2" aria-label="Slide 3"></button>
+        <button class="dot" data-index="3" aria-label="Slide 4"></button>
+        <button class="dot" data-index="4" aria-label="Slide 5"></button>
+        <button class="dot" data-index="5" aria-label="Slide 6"></button>
+        <button class="dot" data-index="6" aria-label="Slide 7"></button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<hr class="divider">
+
+<section id="mission" class="parable">
+  <div class="wrap">
+    <div class="section-head reveal" style="margin-bottom:12px;">
+      <h2>Our mission</h2>
+    </div>
+    <div class="reveal">
+      <p style="font-size:17px; max-width:90ch; text-align:justify;">At the Control and Intelligent Systems Lab, our research lies at the intersection of control theory, optimization, and artificial intelligence with a focus on the principled design of reliable and controllable AI technologies. Our work adapts mathematical principles from control theory, traditionally used to ensure safety and predictability in engineered systems. This enables us to understand, control, and ultimately improve the behavior of AI systems (spanning language applications and embodied systems), so we can live in a world where AI systems are <em>controllable</em>: they reliably do what we want them to do, and they never do what we don't want them to do.</p>
+      <p style="font-size:17px; max-width:90ch; text-align:justify; margin-top:16px;">We are very proud to be an academic lab at <a href="https://www.berkeley.edu" target="_blank" rel="noopener">UC Berkeley</a>, a public university. Above research and teaching excellence, our ultimate goal is to serve society by educating the public, and to train elite engineers so that they may go on to contribute to the public good. In that spirit, we <a href="research.html#publications">publish openly on arXiv</a>, always <a href="https://github.com/camoalon" data-social="github" target="_blank" rel="noopener">share our code</a>, and <a href="#" data-social="youtube" target="_blank" rel="noopener">upload video summaries of our papers</a> to increase the accessibility of our work. We also engage in collaborations and advising with public and private sector partners, take on service to the academic community, and regularly participate in outreach.</p>
+    </div>
+    <div class="hero-cta">
+      <a class="btn" href="research.html">What we do</a>
+      <a class="btn" href="activities.html">What we are up to</a>
+      <a class="btn" href="team.html">Who we are</a>
+      <a class="btn" href="join.html">Reach out!</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="brand">
+        <img src="assets/logo/logo-brain.png" alt="" width="30" height="26" class="brand-mark">
+        <span class="brand-text">
+          <span>Control and Intelligent Systems Lab</span>
+          <a class="brand-sub" href="https://eecs.berkeley.edu" target="_blank" rel="noopener">UC Berkeley · EECS</a>
+        </span>
+      </div>
+      <ul class="footer-links">
+        <li><a href="https://github.com/camoalon" data-social="github" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="#" data-social="youtube" target="_blank" rel="noopener">YouTube</a></li>
+        <li><a href="join.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-fine">© 2026 Control and Intelligent Systems Lab, UC Berkeley. The use of any content on this site for training generative models is not authorized.</div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

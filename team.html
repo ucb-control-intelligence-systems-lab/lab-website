@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team — Control and Intelligent Systems Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Quicksand:wght@300;400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600;8..60,700&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=2">
+<style>
+  .pi-card{ display:grid; grid-template-columns:220px 1fr; gap:24px; padding:24px 36px 16px 36px; background:var(--bg); align-items:start; }
+  .pi-photo{ width:100%; aspect-ratio:1/1; border-radius:10px;
+    background:linear-gradient(160deg, var(--blue-soft), var(--surface)); border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center; color:var(--ink-soft); overflow:hidden;
+    font-family:var(--mono); font-size:12px; text-align:center; }
+  .pi-name{font-size:29px; margin-bottom:4px; color:var(--ink); font-family:var(--display); font-weight:600; line-height:1.1;}
+  .pi-role{font-family:var(--body); font-weight:500; font-size:14px; color:var(--ink-soft); margin-bottom:16px;}
+  .pi-links{display:flex; gap:22px; flex-wrap:wrap;}
+  .credentials{ display:grid; grid-template-columns:repeat(2,1fr); gap:10px 30px; font-family:var(--mono);
+    font-size:13px; color:var(--ink-mid); list-style:none; margin:18px 0 0 0; padding:0; }
+  .credentials li{padding-left:16px; position:relative;}
+  .credentials li::before{content:"—"; position:absolute; left:0; color:var(--gold);}
+
+  .open-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
+  .open-card{padding:28px 24px; background:var(--gold-soft);}
+  .open-card h3{font-size:18px; margin-bottom:8px;}
+  .open-card p{font-size:14.5px;}
+  .open-card .tag{font-family:var(--mono); font-size:11.5px; color:var(--gold); text-transform:uppercase; letter-spacing:0.05em;}
+
+  .supporters-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
+  .supporter-card{ background:var(--surface); padding:28px 22px; }
+  .supporter-label{font-family:var(--display); font-weight:600; font-size:20px; color:var(--ink); margin:0 0 10px 0;}
+  .supporter-card p{font-size:15px; margin:0; text-align:justify;}
+
+  .page-header{padding-bottom:24px;}
+  .page-header p{text-align:justify;}
+
+  @media (max-width:860px){
+    .pi-card{grid-template-columns:1fr; gap:16px;}
+    .pi-photo{max-width:160px;}
+    .open-grid{grid-template-columns:1fr;}
+    .supporters-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <img src="assets/logo/logo-brain.png" alt="" width="30" height="26" class="brand-mark">
+      <span class="brand-text">
+        <span>Control and Intelligent Systems Lab</span>
+        <span class="brand-sub">UC Berkeley · EECS</span>
+      </span>
+    </a>
+    <button class="nav-toggle" aria-label="Toggle menu"><span></span></button>
+    <ul class="navlinks">
+      <li><a href="index.html">Welcome</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="activities.html">Activities</a></li>
+      <li><a class="active" href="team.html">People</a></li>
+      <li><a href="join.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="wrap">
+    <h1>The faces behind the papers</h1>
+    <p>We are a team of researchers, students and academics committed to serving society through education and research in the <a href="https://eecs.berkeley.edu/" target="_blank" rel="noopener">EECS Department at UC Berkeley</a>. We strive to cultivate a sense of belonging in a community centered around principled and controllable AI. In doing that, we support and actively celebrate the different perspectives that each of the members brings to the research process and the lab as a whole.</p>
+  </div>
+</header>
+
+<hr class="divider">
+
+<section style="background:var(--surface); padding:28px 0 16px 0;">
+  <div class="wrap">
+    <div class="section-head reveal" style="margin-bottom:12px;">
+      <h2 style="font-family:var(--display); font-size:40px; color:var(--ink);">Director</h2>
+      <p style="font-family:var(--body); font-size:15px; color:var(--ink-soft); margin-top:-8px;">Principal Investigator</p>
+    </div>
+    <div class="card pi-card reveal">
+      <div class="pi-photo"><img src="assets/people/AmoAlonso.png" alt="Carmen Amo Alonso" style="width:100%; height:100%; object-fit:cover; border-radius:9px;"></div>
+      <div>
+        <div class="pi-name"><span style="font-weight:300;">Carmen</span> <span style="font-weight:700;">Amo Alonso</span></div>
+        <div class="pi-role">Assistant Professor, Electrical Engineering &amp; Computer Sciences, UC Berkeley</div>
+        <p style="text-align:justify;">Carmen leads the Control and Intelligent Systems Lab as an Assistant Professor in EECS at UC Berkeley. Beyond her passion for academic research, teaching and mentoring at a public university, Carmen has collaborated with research teams at Google, Apple, and others. More recently, she engages in AI governance topics drawing on her engineering expertise. Committed to education for all, she travels to South America in the summers to teach underserved students.</p>
+        <p class="pi-links" style="margin-top:18px;">
+          <a href="bio.html" style="color:var(--ink-soft);">Bio →</a>
+          <a href="https://camoalon.github.io/curriculum/" target="_blank" rel="noopener" style="color:var(--ink-soft);">CV →</a>
+          <a href="https://camoalon.github.io/" target="_blank" rel="noopener" style="color:var(--ink-soft);">Website →</a>
+          <a href="https://scholar.google.com/citations?user=2snI7NsAAAAJ&hl=en" target="_blank" rel="noopener" style="color:var(--ink-soft);">Google Scholar →</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--surface); padding:16px 0 28px 0;">
+  <div class="wrap">
+    <div class="section-head reveal" style="margin-bottom:12px;">
+      <h2 style="font-family:var(--display); font-size:40px; color:var(--ink);">Members</h2>
+      <p style="font-family:var(--body); font-size:15px; color:var(--ink-soft); margin-top:-8px;">Core team of researchers</p>
+    </div>
+    <div class="card pi-card reveal">
+      <div class="pi-photo" style="position:relative;">
+        <img src="assets/people/You.jpg" alt="Maybe you?" style="width:100%; height:100%; object-fit:cover; object-position:34% center; border-radius:9px;">
+        <span style="position:absolute; right:5px; bottom:4px; font-size:6px; font-weight:400; color:rgba(255,255,255,0.6); letter-spacing:0.01em; pointer-events:none;">Source: National Archives Catalog</span>
+      </div>
+      <div>
+        <div class="pi-name"><span style="font-weight:300;">Maybe</span> <span style="font-weight:700;">You?</span></div>
+        <div class="pi-role">Graduate student, Electrical Engineering &amp; Computer Sciences, UC Berkeley</div>
+        <p style="text-align:justify;">We are always looking to hire motivated students that share our mission. If you are interested in becoming a member of the lab, please <a href="join.html" style="font-weight:700;">reach out</a>!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--surface); padding:16px 0 28px 0;">
+  <div class="wrap">
+    <div class="section-head reveal" style="margin-bottom:12px;">
+      <h2 style="font-family:var(--display); font-size:40px; color:var(--ink);">Affiliates</h2>
+      <p style="font-family:var(--body); font-size:15px; color:var(--ink-soft); margin-top:-8px;">Visiting students, undergraduates, and external collaborators</p>
+    </div>
+    <div class="card pi-card reveal">
+      <div class="pi-photo" style="position:relative;">
+        <img src="assets/people/You.jpg" alt="Maybe you?" style="width:100%; height:100%; object-fit:cover; object-position:34% center; border-radius:9px;">
+        <span style="position:absolute; right:5px; bottom:4px; font-size:6px; font-weight:400; color:rgba(255,255,255,0.6); letter-spacing:0.01em; pointer-events:none;">Source: National Archives Catalog</span>
+      </div>
+      <div>
+        <div class="pi-name"><span style="font-weight:300;">Maybe</span> <span style="font-weight:700;">You?</span></div>
+        <p style="text-align:justify; margin-top:37px;">We love to work with undergrads, host visitors, and collaborate with external researchers. While our capacity to do this is sometimes limited, feel free to <a href="join.html" style="font-weight:700;">explore opportunities and reach out</a>!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--surface); padding:16px 0 40px 0;">
+  <div class="wrap">
+    <div class="section-head reveal" style="margin-bottom:12px;">
+      <h2 style="font-family:var(--display); font-size:40px; color:var(--ink);">Supporters</h2>
+      <p style="font-family:var(--body); font-size:15px; color:var(--ink-soft); margin-top:-8px;">People and institutions that support our research</p>
+    </div>
+    <div class="supporters-grid reveal">
+      <div class="card supporter-card">
+        <div class="supporter-label">Academic Partners</div>
+        <p>We are lucky to have a wide range of collaborators across different academic institutions in the U.S., Europe and Asia, including partners in the UC system, Stanford, Princeton, MIT, Oxford, ETH Zurich,  ELLIS Institute, Universidad Carlos III, Eindhoven UT, Osaka MU, and others.</p>
+      </div>
+      <div class="card supporter-card">
+        <div class="supporter-label">Industry Relationships</div>
+        <p>Members of the lab have actively engaged with industry partners through internships and collaborations including the Modeling and Optimization Engineering Team at Tesla, the Machine Learning Research Team at Apple, and the Paradigms of Intelligence Team at Google, among others.</p>
+      </div>
+      <div class="card supporter-card">
+        <div class="supporter-label">Funding Agencies</div>
+        <p>We are grateful to all of those who have partially funded our research! This includes public and private entities, such as the Office of Naval Research, Schmidt Sciences, the ETH AI Center, Amazon AI4Science, among others.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="brand">
+        <img src="assets/logo/logo-brain.png" alt="" width="30" height="26" class="brand-mark">
+        <span class="brand-text">
+          <span>Control and Intelligent Systems Lab</span>
+          <a class="brand-sub" href="https://eecs.berkeley.edu" target="_blank" rel="noopener">UC Berkeley · EECS</a>
+        </span>
+      </div>
+      <ul class="footer-links">
+        <li><a href="https://github.com/camoalon" data-social="github" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="#" data-social="youtube" target="_blank" rel="noopener">YouTube</a></li>
+        <li><a href="join.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-fine">© 2026 Control and Intelligent Systems Lab, UC Berkeley. The use of any content on this site for training generative models is not authorized.</div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

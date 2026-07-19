@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research — Control and Intelligent Systems Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=2">
+<style>
+  .granularity{ display:grid; grid-template-columns:1.15fr 0.85fr; gap:48px; align-items:start; }
+  .diagram-sticky{position:sticky; top:96px;}
+  .diagram-frame{ padding:0; display:flex; align-items:center; justify-content:center; }
+  .reveal-figure{ position:relative; width:100%; }
+  .reveal-img{ display:block; width:100%; height:auto; border-radius:8px; }
+  .levels{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .level{ padding:10px 4px; cursor:pointer; background:none;
+    border:none; text-align:left; width:100%; display:block; }
+  .level-head{display:flex; align-items:baseline; justify-content:space-between; gap:16px;}
+  .level-title{font-family:var(--display); font-weight:700; font-size:18.5px; color:var(--ink); transition:color .15s ease;}
+  .level-tag{font-family:var(--mono); font-size:11.5px; color:var(--ink-soft); white-space:nowrap;}
+  .zoom-divider{ display:flex; align-items:center; gap:12px; font-family:var(--mono); font-size:11.5px;
+    color:var(--ink-soft); white-space:nowrap; padding:0 4px; }
+  .zoom-divider::before, .zoom-divider::after{ content:""; flex:1; height:1px; background:var(--line); }
+  .level-body{max-height:0; overflow:hidden; transition:max-height .28s ease;}
+  .level.active .level-body{max-height:220px;}
+  .level[data-ring="ring-ai"] .level-title{color:#3B5691;}
+  .level[data-ring="ring-deep"] .level-title{color:#8D7744;}
+  .level[data-ring="ring-layer"] .level-title{color:#87407E;}
+  .level[data-ring="ring-surround"] .level-title{color:#538F52;}
+  .level[data-ring="ring-mixer"] .level-title{color:#828282;}
+  .level-body p{margin:14px 0 0 0; font-size:15px; max-width:56ch; text-align:justify;}
+  .level-body a{font-family:var(--mono); font-size:13px;}
+
+  .page-header{padding-bottom:24px;}
+  .page-header p{text-align:justify;}
+
+  .distributed{display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center;}
+  .net-frame{padding:24px;}
+  .stat-row{display:flex; gap:32px; margin-top:26px; flex-wrap:wrap;}
+  .stat{font-family:var(--mono);}
+  .stat .num{font-family:var(--display); font-size:24px; color:var(--blue); display:block;}
+  .stat .lab{font-size:12px; color:var(--ink-soft);}
+
+  @media (max-width: 860px){
+    .granularity{grid-template-columns:1fr;}
+    .diagram-sticky{position:relative; top:0;}
+    .distributed{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <img src="assets/logo/logo-brain.png" alt="" width="30" height="26" class="brand-mark">
+      <span class="brand-text">
+        <span>Control and Intelligent Systems Lab</span>
+        <span class="brand-sub">UC Berkeley · EECS</span>
+      </span>
+    </a>
+    <button class="nav-toggle" aria-label="Toggle menu"><span></span></button>
+    <ul class="navlinks">
+      <li><a href="index.html">Welcome</a></li>
+      <li><a class="active" href="research.html">Research</a></li>
+      <li><a href="activities.html">Activities</a></li>
+      <li><a href="team.html">People</a></li>
+      <li><a href="join.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="wrap">
+    <h1 style="margin-bottom:0;">AI systems as dynamical systems</h1>
+    <div style="font-family:var(--display); font-weight:600; font-size:clamp(24px,3vw,32px); color:var(--ink); margin-top:2px;">that we can control</div>
+    <p>We study artificial intelligence through the lens of control theory: treating generative models as dynamical systems that can be understood, controlled, and ultimately improved with the same rigor and reliability we already have in other engineering disciplines. We believe this kind of rigor, not just empirical trial and error, is what will make AI systems truly reliable. In that spirit, below you will find how we think about the problem at every level of granularity, together with the papers that came out of it.</p>
+  </div>
+</header>
+
+<hr class="divider">
+
+<section id="dynamics-primer" style="background:var(--surface); padding:28px 0 16px 0;">
+  <div class="wrap">
+    <div class="section-head reveal" style="margin-bottom:16px;">
+      <h2>What is a dynamical system?</h2>
+    </div>
+    <p style="font-size:17px; max-width:90ch; text-align:justify;">Imagine a system that has a property we can measure, and imagine that this property evolves with time: we call this a <em>dynamical system</em>. Many things can be studied as dynamical systems: a car (position and velocity), a robot (joint angles and velocities), the power network (voltage and frequency), the metabolic network (metabolite concentrations), and many more. In control theory, we are interested in understanding how to analyze and control the evolution of these systems so that they have desirable properties: the car does not crash, the voltage stays within limits, the robot reaches its desired position.</p>
+    <p style="font-size:17px; max-width:90ch; text-align:justify; margin-top:16px;">You have probably interacted with many dynamical systems today! But perhaps what you did not know is that AI systems are also dynamical systems. In the Control and Intelligent Systems Lab, we use control theory to study the dynamical systems underlying intelligent behavior in artificial systems. We believe this will enable better AI systems, and will expand the applicability of control techniques to a wide range of applications, from natural language processing to robotics. Below we tell you what our approach is to doing this!</p>
+  </div>
+</section>
+
+<section id="granularity-section" style="background:var(--surface); padding:16px 0 16px 0;">
+  <div class="wrap">
+    <div class="section-head reveal" style="max-width:none; margin-bottom:20px;">
+      <h2 style="white-space:nowrap;">AI has dynamical systems at many levels of granularity</h2>
+    </div>
+
+    <p style="font-size:17px; max-width:90ch; text-align:justify; margin-bottom:36px;">As you are probably guessing, unveiling the dynamics of intelligence is not straightforward. Like many other engineering systems, AI systems exhibit complex and carefully curated architectures that are responsible for the behaviors that we observe. For this reason, we study the dynamical systems that arise <em>at different levels of granularity</em> while accounting for their role in the full AI systems' architecture:</p>
+
+    <div class="granularity">
+      <div class="diagram-sticky reveal">
+        <div class="diagram-frame">
+          <div class="reveal-figure">
+            <img class="reveal-img" id="granularityImg" src="assets/AI-figure/full.png" alt="A generative model shown as a dynamical system, with all levels of granularity highlighted.">
+          </div>
+        </div>
+      </div>
+
+      <div class="levels" id="levels">
+        <div class="level" data-ring="ring-ai" tabindex="0">
+          <div class="level-head"><span class="level-title">05 · AI System</span></div>
+          <div class="level-body">
+            <p>AI generative models interact with the world by being embedded in cyber or physical systems, which are themselves dynamical systems: robots, recommendation platforms, chatbots, etc. We can analyze and control how these systems interact with the world using tools from control theory!</p>
+            <a href="#pub-ring-ai" class="see-papers" data-target-ring="ring-ai">See papers →</a>
+          </div>
+        </div>
+        <div class="zoom-divider">↓ Zoom in ↓</div>
+        <div class="level" data-ring="ring-deep" tabindex="0">
+          <div class="level-head"><span class="level-title">04 · Deep Architecture</span></div>
+          <div class="level-body">
+            <p>Zooming in, an entire model's dynamics can also be studied as a closed-loop system. For instance, autoregressive loops or denoising steps can be seen as closed-loop dynamical processes.</p>
+            <a href="#pub-ring-deep" class="see-papers" data-target-ring="ring-deep">See papers →</a>
+          </div>
+        </div>
+        <div class="zoom-divider">↓ Zoom in ↓</div>
+        <div class="level" data-ring="ring-layer" tabindex="0">
+          <div class="level-head"><span class="level-title">03 · Layers</span></div>
+          <div class="level-body">
+            <p>Inside the deep architecture we find a sequence of stacked computing blocks, the layers. This can be treated as an unrolled dynamical system, where depth is seen as time. Treated as an input-output system agnostic to its internals, a stack of layers becomes a trajectory unfolding in time. Steering a model's activations during generation is then a control problem.</p>
+            <a href="#pub-ring-layer" class="see-papers" data-target-ring="ring-layer">See papers →</a>
+          </div>
+        </div>
+        <div class="zoom-divider">↓ Zoom in ↓</div>
+        <div class="level" data-ring="ring-surround" tabindex="0">
+          <div class="level-head"><span class="level-title">02 · Mixer Scaffolding</span></div>
+          <div class="level-body">
+            <p>Inside each layer we find the mixer scaffold, a set of components such as normalization layers and skip connections. These components pre- and post-process the signal before and after the <em style="color:#828282;">token mixer</em>. By studying these components, we can gain important insights about their dynamics, both at inference and training time.</p>
+            <a href="#pub-ring-surround" class="see-papers" data-target-ring="ring-surround">See papers →</a>
+          </div>
+        </div>
+        <div class="zoom-divider">↓ Zoom in ↓</div>
+        <div class="level" data-ring="ring-mixer" tabindex="0">
+          <div class="level-head"><span class="level-title">01 · Token Mixer</span></div>
+          <div class="level-body">
+            <p>At the core of every architecture sits the block that mixes information across tokens: attention, the SSM recurrence, and their relatives are examples of this block. Studying how tokens evolve here clarifies what actually distinguishes one architecture from another, and what are essential ingredients to generate intelligent behavior.</p>
+            <a href="#pub-ring-mixer" class="see-papers" data-target-ring="ring-mixer">See papers →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card reveal" style="padding:16px 18px; background:var(--bg); margin-top:40px;">
+      <p style="font-size:13px; color:var(--ink-mid); text-align:justify; margin:0 0 10px 0;"><strong>Fun fact.-</strong> Planes also have dynamical systems at different degrees of granularity: (i) the dynamics of an <em style="color:#828282;">airfoil</em> dictates lift, (ii) airfoils have <em style="color:#538F52;">structural components</em> that provide stability and shape the airflow, (iii) stacking airfoils gives <em style="color:#87407E;">wings</em>, which have complex aeroelastic dynamics, (iv) putting the wings, body, and tail together gives the dynamics of a <em style="color:#8D7744;">plane</em>, and (v) once in the sky, <em style="color:#3B5691;">air traffic</em> dynamics are also crucially controlled. All of these can be studied with tools from control theory!</p>
+      <img src="assets/AI-figure/plane-analogy-transparent.png" alt="An analogy across levels of granularity, from an airfoil cross-section to a wing panel to a full plane to an airport." style="display:block; width:410px; max-width:100%; height:auto; margin:0 auto;">
+    </div>
+
+    <p style="font-size:17px; max-width:90ch; text-align:justify; margin-top:24px;">Studying AI systems through the lens of dynamical systems holds great promise to achieve (a) principled design strategies, replacing today's trial-and-error approach (compute- and energy-intensive!), and (b) controllable AI architectures with guarantees, enabling the use of AI reliably in critical infrastructure. Classical control theory, however, does not directly translate to AI: most of its tools are not equipped to handle the sheer complexity, massive scale, sparse topologies, and local communication present in current AI systems. In the Control and Intelligent Systems Lab, we also extend control-theoretic tools to address these problems!</p>
+  </div>
+</section>
+
+<section id="distributed-section" style="background:var(--surface); padding:16px 0;">
+  <div class="wrap">
+    <div class="section-head reveal" style="max-width:none; margin-bottom:16px;">
+      <h2>Distributed Control for Large-Scale Systems, like AI</h2>
+    </div>
+    <div class="reveal">
+      <p style="max-width:90ch; font-size:17px; text-align:justify;">Large-scale dynamical systems are everywhere! The internet, the power network, a fleet of autonomous cars, or bacterial metabolism are all large-scale networks. One important feature of these systems (often overlooked, or seen as a burden) is that the different agents that compose these networks can only communicate locally to a few neighbors. In our work, we leverage this sparsity: by restricting each agent in the network to only communicate with a small neighborhood, we developed a new set of algorithms and theoretical results to optimally control distributed bio and cyber-physical systems for safety-critical applications: the <a href="https://thesis.caltech.edu/15262/3/Carmen_Amo_Alonso_Caltech_PhD_Thesis.pdf" target="_blank" rel="noopener">Distributed and Localized Model Predictive Control (DLMPC)</a> framework. In the Control and Intelligent Systems Lab, we extend this and other frameworks in the distributed setting to develop scalable control tools that are applicable to large-scale systems, including AI!</p>
+    </div>
+  </div>
+</section>
+
+<section id="publications" style="background:var(--surface); padding:16px 0 40px 0;">
+  <div class="wrap">
+    <div class="section-head reveal" style="max-width:none; margin-bottom:16px;">
+      <h2 style="white-space:nowrap;">Publications</h2>
+    </div>
+
+    <div class="pub-tabs reveal">
+      <button class="pub-tab active" data-view="granularity" type="button">Per degree of granularity</button>
+      <button class="pub-tab" data-view="year" type="button">Per year</button>
+    </div>
+
+    <div class="pub-groups reveal" id="pubGranularity">
+      <div class="pub-group" id="pub-ring-ai" data-group tabindex="0">
+        <div class="pub-group-head"><span class="pub-group-title" style="color:#3B5691;">AI System</span></div>
+        <div class="pub-group-body"><div class="pub-list">
+          <div class="pub-row"><div class="pub-title"><a href="https://arxiv.org/abs/2601.02412" target="_blank" rel="noopener">Socially-Aware Recommender Systems Mitigate Opinion Clusterization</a></div><div class="pub-meta">Schuepp, Amo Alonso, Dörfler, De Pasquale — arXiv preprint, 2026</div><div class="pub-links"><a href="https://github.com/lukaschu/Social_Recommender_System" target="_blank" rel="noopener">Code</a> · <a href="https://arxiv.org/abs/2601.02412" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://openreview.net/forum?id=HJTFgDYoLO" target="_blank" rel="noopener">A Formal Controllability Toolkit for Black-Box Generative Models</a></div><div class="pub-meta">Cheng, Amo Alonso, Danieli, Blaas, Zappella, Rodríguez, Suau — ICLR, 2026</div><div class="pub-links"><a href="https://github.com/apple/ml-genctrl" target="_blank" rel="noopener">Code</a> · <a href="https://arxiv.org/abs/2601.05637" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://arxiv.org/abs/2604.18637" target="_blank" rel="noopener">NeuroAI and Beyond: Bridging Between Advances in Neuroscience and Artificial Intelligence</a></div><div class="pub-meta">Zador, Fellous, Sejnowski, et al. (incl. Amo Alonso) — arXiv preprint, 2026</div><div class="pub-links"><a href="https://arxiv.org/abs/2604.18637" target="_blank" rel="noopener">Paper</a></div></div>
+        </div></div>
+      </div>
+      <div class="pub-group" id="pub-ring-deep" data-group tabindex="0">
+        <div class="pub-group-head"><span class="pub-group-title" style="color:#8D7744;">Deep Architecture</span></div>
+        <div class="pub-group-body"><div class="pub-list">
+          <div class="pub-row"><div class="pub-title"><a href="https://arxiv.org/pdf/2507.12855" target="_blank" rel="noopener">DEMONSTRATE: Zero-shot Language to Robotic Control via Multi-task Demonstration Learning</a></div><div class="pub-meta">Rickenbach, Lee, Zurbrügg, Amo Alonso, Zeilinger — RSS Workshop (OOD), 2025</div><div class="pub-links"><a href="https://demonstrate-mpc.github.io" target="_blank" rel="noopener">Website</a> · <a href="https://arxiv.org/pdf/2507.12855" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://ieeexplore.ieee.org/document/10801425" target="_blank" rel="noopener">NARRATE: Versatile Language Architecture for Optimal Control in Robotics</a></div><div class="pub-meta">Ismail*, Arbues*, Cotterell, Zurbrügg, Amo Alonso — IROS, 2024</div><div class="pub-links"><a href="https://narrate-mpc.github.io" target="_blank" rel="noopener">Website</a> · <a href="https://www.youtube.com/watch?v=8__CQMCkdws" target="_blank" rel="noopener">Video</a> · <a href="https://github.com/vateseif/narrate" target="_blank" rel="noopener">Code</a> · <a href="https://arxiv.org/abs/2403.10762" target="_blank" rel="noopener">Paper</a></div></div>
+        </div></div>
+      </div>
+      <div class="pub-group" id="pub-ring-layer" data-group tabindex="0">
+        <div class="pub-group-head"><span class="pub-group-title" style="color:#87407E;">Layers</span></div>
+        <div class="pub-group-body"><div class="pub-list">
+          <div class="pub-row"><div class="pub-title"><a href="https://arxiv.org/abs/2603.05487" target="_blank" rel="noopener">Observing and Controlling Features in Vision-Language-Action Models</a></div><div class="pub-meta">Buurmeijer, Amo Alonso, Swann, Pavone — arXiv preprint, 2026</div><div class="pub-links"><a href="https://arxiv.org/abs/2603.05487" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://openreview.net/forum?id=t8ctvylFn7" target="_blank" rel="noopener">Linearly Controlled Language Generation with Performative Guarantees</a></div><div class="pub-meta">Cheng, Amo Alonso — TMLR, 2025</div><div class="pub-links"><a href="https://github.com/chengemily1/llm-control" target="_blank" rel="noopener">Code</a> · <a href="https://arxiv.org/abs/2405.15454" target="_blank" rel="noopener">Paper</a></div></div>
+        </div></div>
+      </div>
+      <div class="pub-group" id="pub-ring-surround" data-group tabindex="0">
+        <div class="pub-group-head"><span class="pub-group-title" style="color:#538F52;">Mixer Scaffolding</span></div>
+        <div class="pub-group-body"><div class="pub-list">
+          <div class="pub-row"><div class="pub-title"><a href="https://arxiv.org/abs/2602.10408" target="_blank" rel="noopener">Gated Normalization Removal and Scale Anchoring in Pre-Norm Transformers</a></div><div class="pub-meta">Kanavalau, Amo Alonso, Lall — arXiv preprint, 2026</div><div class="pub-links"><a href="https://arxiv.org/abs/2602.10408" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://proceedings.iclr.cc/paper_files/paper/2025/hash/1f7b3b0dd7710af02aac0db5be4cfc8d-Abstract-Conference.html" target="_blank" rel="noopener">Lambda-Skip Connections: the component that prevents Rank Collapse</a></div><div class="pub-meta">Joseph, Sieber, Zeilinger, Amo Alonso — ICLR, 2025</div><div class="pub-links"><a href="https://arxiv.org/abs/2410.10609" target="_blank" rel="noopener">Paper</a></div></div>
+        </div></div>
+      </div>
+      <div class="pub-group" id="pub-ring-mixer" data-group tabindex="0">
+        <div class="pub-group-head"><span class="pub-group-title" style="color:#828282;">Token Mixer</span></div>
+        <div class="pub-group-body"><div class="pub-list">
+          <div class="pub-row"><div class="pub-title"><a href="https://arxiv.org/abs/2607.01520" target="_blank" rel="noopener">The Risk of KV Cache Compression</a></div><div class="pub-meta">Haverbeck, Posada-Moreno, Amo Alonso, Trimpe, Pavone — arXiv preprint, 2026</div><div class="pub-links"><a href="https://arxiv.org/abs/2607.01520" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://arxiv.org/pdf/2510.09389" target="_blank" rel="noopener">Design Principles for Sequence Models via Coefficient Dynamics</a></div><div class="pub-meta">Sieber, Zeilinger, Orvieto, Amo Alonso — arXiv preprint, 2025</div><div class="pub-links"><a href="https://arxiv.org/pdf/2510.09389" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://openreview.net/forum?id=s4zitEu2R8" target="_blank" rel="noopener">Bridging Expressivity and Scalability with Adaptive Unitary SSMs</a></div><div class="pub-meta">Karuvally, Nowak, Keller, Amo Alonso, Sejnowski, Siegelmann — NeurIPS, 2025</div><div class="pub-links"><a href="https://github.com/arjunkaruvally/AUSSM" target="_blank" rel="noopener">Code</a> · <a href="https://arxiv.org/abs/2507.05238" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://ieeexplore.ieee.org/document/11107969" target="_blank" rel="noopener">State Space Models as Foundation Models: A Control Theoretic Overview</a></div><div class="pub-meta">Amo Alonso*, Sieber*, Zeilinger — ACC, 2025</div><div class="pub-links"><a href="https://github.com/jsie7/ssm-benchmark" target="_blank" rel="noopener">Code</a> · <a href="https://arxiv.org/abs/2403.16899" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://proceedings.neurips.cc/paper_files/paper/2024/hash/f271a36160097fbdb06a9adeb1605343-Abstract-Conference.html" target="_blank" rel="noopener">Understanding the Differences in Foundation Models: Attention, SSMs, and RNNs</a></div><div class="pub-meta">Sieber*, Amo Alonso*, Didier, Zeilinger, Orvieto — NeurIPS, 2024</div><div class="pub-links"><a href="https://github.com/jsie7/ssm-benchmark" target="_blank" rel="noopener">Code</a> · <a href="https://arxiv.org/abs/2405.15731" target="_blank" rel="noopener">Paper</a></div></div>
+        </div></div>
+      </div>
+      <div class="pub-group" data-group tabindex="0">
+        <div class="pub-group-head"><span class="pub-group-title">Distributed Control</span></div>
+        <div class="pub-group-body"><div class="pub-list">
+          <div class="pub-row"><div class="pub-title"><a href="https://arxiv.org/abs/2603.29265" target="_blank" rel="noopener">Bilevel MPC for Linear Systems: A Tractable Reduction and Continuous Connection to Hierarchical MPC</a></div><div class="pub-meta">Moriyasu, Amo Alonso, Pavone — arXiv preprint, 2026</div><div class="pub-links"><a href="https://github.com/StanfordASL/Reduced_BMPC" target="_blank" rel="noopener">Code</a> · <a href="https://arxiv.org/abs/2603.29265" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://arxiv.org/abs/2504.01677" target="_blank" rel="noopener">System Level Synthesis for Affine Control Policies: Model Based and Data-Driven Settings</a></div><div class="pub-meta">Schuepp, De Pasquale, Dörfler, Amo Alonso — IEEE CDC, 2025</div><div class="pub-links"><a href="https://github.com/lukaschu/SLS-for-Affine-Policies" target="_blank" rel="noopener">Code</a> · <a href="https://arxiv.org/abs/2504.01677" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://thesis.library.caltech.edu/15262/" target="_blank" rel="noopener">Distributed and Localized Model Predictive Control</a></div><div class="pub-meta">Amo Alonso — Caltech Ph.D. Thesis, 2023</div><div class="pub-links"><a href="https://www.youtube.com/watch?v=X6AiGiXdxhQ" target="_blank" rel="noopener">Video</a> · <a href="https://github.com/unstable-zeros/dl-mpc-sls" target="_blank" rel="noopener">Code</a> · <a href="https://thesis.library.caltech.edu/15262/" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://ieeexplore.ieee.org/document/10229197" target="_blank" rel="noopener">Global Performance Guarantees for Localized Model Predictive Control</a></div><div class="pub-meta">Li, Amo Alonso — IEEE Open Journal of Control Systems, 2023</div><div class="pub-links"><a href="https://www.youtube.com/watch?v=X6AiGiXdxhQ&t=2073s" target="_blank" rel="noopener">Video</a> · <a href="https://github.com/flyingpeach/LocalizedMPCPerformance" target="_blank" rel="noopener">Code</a> · <a href="https://arxiv.org/abs/2303.11264" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://ieeexplore.ieee.org/document/10083211" target="_blank" rel="noopener">Distributed and Localized Model Predictive Control, Part II: Theoretical Guarantees</a> <span class="pub-badge">Best Paper</span></div><div class="pub-meta">Amo Alonso, Li, Anderson, Matni — IEEE Trans. on Control of Network Systems, 2023</div><div class="pub-links"><a href="https://youtu.be/X6AiGiXdxhQ?t=1291" target="_blank" rel="noopener">Video</a> · <a href="https://github.com/unstable-zeros/dl-mpc-sls/tree/master/2022_TNCS_DLMPC-Part-II" target="_blank" rel="noopener">Code</a> · <a href="https://arxiv.org/abs/2203.00780" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://ieeexplore.ieee.org/document/9939038" target="_blank" rel="noopener">Distributed and Localized Model Predictive Control, Part I: Synthesis and Implementation</a></div><div class="pub-meta">Amo Alonso, Li, Anderson, Matni — IEEE Trans. on Control of Network Systems, 2023</div><div class="pub-links"><a href="https://youtu.be/X6AiGiXdxhQ?t=326" target="_blank" rel="noopener">Video</a> · <a href="https://github.com/unstable-zeros/dl-mpc-sls/tree/master/2022_TNCS_DLMPC-Part-I" target="_blank" rel="noopener">Code</a> · <a href="https://arxiv.org/abs/2110.07010" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://ieeexplore.ieee.org/document/9831839" target="_blank" rel="noopener">Effective GPU Parallelization of Distributed &amp; Localized MPC</a> <span class="pub-badge">Best Student Paper</span></div><div class="pub-meta">Amo Alonso, Tseng — IEEE Int'l Conf. on Control &amp; Automation, 2022</div><div class="pub-links"><a href="https://www.youtube.com/watch?v=X6AiGiXdxhQ&t=2295s" target="_blank" rel="noopener">Video</a> · <a href="https://github.com/camoalon/DLMPC-GPU" target="_blank" rel="noopener">Code</a> · <a href="https://arxiv.org/abs/2103.14990" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://ieeexplore.ieee.org/document/9772975" target="_blank" rel="noopener">Data-Driven Distributed and Localized Model Predictive Control</a></div><div class="pub-meta">Amo Alonso*, Yang*, Matni — IEEE Open Journal of Control Systems, 2022</div><div class="pub-links"><a href="https://youtu.be/X6AiGiXdxhQ?t=2624" target="_blank" rel="noopener">Video</a> · <a href="https://github.com/unstable-zeros/dl-mpc-sls/tree/master/2022_OJCS_DataDriven-DLMPC" target="_blank" rel="noopener">Code</a> · <a href="https://arxiv.org/abs/2112.12229" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://ieeexplore.ieee.org/document/9483130" target="_blank" rel="noopener">Frontiers in Scalable Distributed Control: SLS, MPC, and Beyond</a></div><div class="pub-meta">Li, Amo Alonso, Doyle — IEEE ACC, 2021</div><div class="pub-links"><a href="https://arxiv.org/abs/2010.01292" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://ieeexplore.ieee.org/document/9304349" target="_blank" rel="noopener">Explicit Distributed and Localized Model Predictive Control via System Level Synthesis</a></div><div class="pub-meta">Amo Alonso, Anderson, Matni — IEEE CDC, 2020</div><div class="pub-links"><a href="https://www.youtube.com/watch?v=IhtuGZp8QM0" target="_blank" rel="noopener">Video</a> · <a href="https://github.com/unstable-zeros/dl-mpc-sls/tree/master/2020_CDC_Explicit-DLMPC" target="_blank" rel="noopener">Code</a> · <a href="https://arxiv.org/abs/2005.13807" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://ieeexplore.ieee.org/document/9303936" target="_blank" rel="noopener">Distributed and Localized Model Predictive Control via System Level Synthesis</a></div><div class="pub-meta">Amo Alonso, Matni — IEEE CDC, 2020</div><div class="pub-links"><a href="https://www.youtube.com/watch?v=mF2Wbriy2Zg" target="_blank" rel="noopener">Video</a> · <a href="https://github.com/unstable-zeros/dl-mpc-sls/tree/master/2020_CDC_DLMPC" target="_blank" rel="noopener">Code</a> · <a href="https://arxiv.org/abs/1909.10074" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://ieeexplore.ieee.org/document/9304369" target="_blank" rel="noopener">System Level Synthesis via Dynamic Programming</a></div><div class="pub-meta">Tseng, Amo Alonso, Han — IEEE CDC, 2020</div><div class="pub-links"><a href="https://arxiv.org/abs/2004.12567" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://www.sciencedirect.com/science/article/pii/S240589632031377X" target="_blank" rel="noopener">Distributed Linear Quadratic Regulator Robust to Communication Dropouts</a></div><div class="pub-meta">Amo Alonso, Ho, Maestre — IFAC World Congress, 2020</div><div class="pub-links"><a href="https://www.youtube.com/watch?v=EwIXnquVmS0" target="_blank" rel="noopener">Video</a> · <a href="https://arxiv.org/abs/2103.03967" target="_blank" rel="noopener">Paper</a></div></div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="pub-groups reveal" id="pubYear" style="display:none;">
+      <div class="pub-group" data-group tabindex="0">
+        <div class="pub-group-head"><span class="pub-group-title">2026</span></div>
+        <div class="pub-group-body"><div class="pub-list">
+          <div class="pub-row"><div class="pub-title"><a href="https://arxiv.org/abs/2601.02412" target="_blank" rel="noopener">Socially-Aware Recommender Systems Mitigate Opinion Clusterization</a></div><div class="pub-meta">Schuepp, Amo Alonso, Dörfler, De Pasquale — arXiv preprint, 2026</div><div class="pub-links"><a href="https://github.com/lukaschu/Social_Recommender_System" target="_blank" rel="noopener">Code</a> · <a href="https://arxiv.org/abs/2601.02412" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://openreview.net/forum?id=HJTFgDYoLO" target="_blank" rel="noopener">A Formal Controllability Toolkit for Black-Box Generative Models</a></div><div class="pub-meta">Cheng, Amo Alonso, Danieli, Blaas, Zappella, Rodríguez, Suau — ICLR, 2026</div><div class="pub-links"><a href="https://github.com/apple/ml-genctrl" target="_blank" rel="noopener">Code</a> · <a href="https://arxiv.org/abs/2601.05637" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://arxiv.org/abs/2603.05487" target="_blank" rel="noopener">Observing and Controlling Features in Vision-Language-Action Models</a></div><div class="pub-meta">Buurmeijer, Amo Alonso, Swann, Pavone — arXiv preprint, 2026</div><div class="pub-links"><a href="https://arxiv.org/abs/2603.05487" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://arxiv.org/abs/2604.18637" target="_blank" rel="noopener">NeuroAI and Beyond: Bridging Between Advances in Neuroscience and Artificial Intelligence</a></div><div class="pub-meta">Zador, Fellous, Sejnowski, et al. (incl. Amo Alonso) — arXiv preprint, 2026</div><div class="pub-links"><a href="https://arxiv.org/abs/2604.18637" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://arxiv.org/abs/2603.29265" target="_blank" rel="noopener">Bilevel MPC for Linear Systems: A Tractable Reduction and Continuous Connection to Hierarchical MPC</a></div><div class="pub-meta">Moriyasu, Amo Alonso, Pavone — arXiv preprint, 2026</div><div class="pub-links"><a href="https://github.com/StanfordASL/Reduced_BMPC" target="_blank" rel="noopener">Code</a> · <a href="https://arxiv.org/abs/2603.29265" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://arxiv.org/abs/2607.01520" target="_blank" rel="noopener">The Risk of KV Cache Compression</a></div><div class="pub-meta">Haverbeck, Posada-Moreno, Amo Alonso, Trimpe, Pavone — arXiv preprint, 2026</div><div class="pub-links"><a href="https://arxiv.org/abs/2607.01520" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://arxiv.org/abs/2602.10408" target="_blank" rel="noopener">Gated Normalization Removal and Scale Anchoring in Pre-Norm Transformers</a></div><div class="pub-meta">Kanavalau, Amo Alonso, Lall — arXiv preprint, 2026</div><div class="pub-links"><a href="https://arxiv.org/abs/2602.10408" target="_blank" rel="noopener">Paper</a></div></div>
+        </div></div>
+      </div>
+      <div class="pub-group" data-group tabindex="0">
+        <div class="pub-group-head"><span class="pub-group-title">2025</span></div>
+        <div class="pub-group-body"><div class="pub-list">
+          <div class="pub-row"><div class="pub-title"><a href="https://ieeexplore.ieee.org/document/11107969" target="_blank" rel="noopener">State Space Models as Foundation Models: A Control Theoretic Overview</a></div><div class="pub-meta">Amo Alonso*, Sieber*, Zeilinger — ACC, 2025</div><div class="pub-links"><a href="https://github.com/jsie7/ssm-benchmark" target="_blank" rel="noopener">Code</a> · <a href="https://arxiv.org/abs/2403.16899" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://proceedings.iclr.cc/paper_files/paper/2025/hash/1f7b3b0dd7710af02aac0db5be4cfc8d-Abstract-Conference.html" target="_blank" rel="noopener">Lambda-Skip Connections: the component that prevents Rank Collapse</a></div><div class="pub-meta">Joseph, Sieber, Zeilinger, Amo Alonso — ICLR, 2025</div><div class="pub-links"><a href="https://arxiv.org/abs/2410.10609" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://openreview.net/forum?id=t8ctvylFn7" target="_blank" rel="noopener">Linearly Controlled Language Generation with Performative Guarantees</a></div><div class="pub-meta">Cheng, Amo Alonso — TMLR, 2025</div><div class="pub-links"><a href="https://github.com/chengemily1/llm-control" target="_blank" rel="noopener">Code</a> · <a href="https://arxiv.org/abs/2405.15454" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://arxiv.org/pdf/2507.12855" target="_blank" rel="noopener">DEMONSTRATE: Zero-shot Language to Robotic Control via Multi-task Demonstration Learning</a></div><div class="pub-meta">Rickenbach, Lee, Zurbrügg, Amo Alonso, Zeilinger — RSS Workshop (OOD), 2025</div><div class="pub-links"><a href="https://demonstrate-mpc.github.io" target="_blank" rel="noopener">Website</a> · <a href="https://arxiv.org/pdf/2507.12855" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://openreview.net/forum?id=s4zitEu2R8" target="_blank" rel="noopener">Bridging Expressivity and Scalability with Adaptive Unitary SSMs</a></div><div class="pub-meta">Karuvally, Nowak, Keller, Amo Alonso, Sejnowski, Siegelmann — NeurIPS, 2025</div><div class="pub-links"><a href="https://github.com/arjunkaruvally/AUSSM" target="_blank" rel="noopener">Code</a> · <a href="https://arxiv.org/abs/2507.05238" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://arxiv.org/pdf/2510.09389" target="_blank" rel="noopener">Design Principles for Sequence Models via Coefficient Dynamics</a></div><div class="pub-meta">Sieber, Zeilinger, Orvieto, Amo Alonso — arXiv preprint, 2025</div><div class="pub-links"><a href="https://arxiv.org/pdf/2510.09389" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://arxiv.org/abs/2504.01677" target="_blank" rel="noopener">System Level Synthesis for Affine Control Policies: Model Based and Data-Driven Settings</a></div><div class="pub-meta">Schuepp, De Pasquale, Dörfler, Amo Alonso — IEEE CDC, 2025</div><div class="pub-links"><a href="https://github.com/lukaschu/SLS-for-Affine-Policies" target="_blank" rel="noopener">Code</a> · <a href="https://arxiv.org/abs/2504.01677" target="_blank" rel="noopener">Paper</a></div></div>
+        </div></div>
+      </div>
+      <div class="pub-group" data-group tabindex="0">
+        <div class="pub-group-head"><span class="pub-group-title">2024</span></div>
+        <div class="pub-group-body"><div class="pub-list">
+          <div class="pub-row"><div class="pub-title"><a href="https://proceedings.neurips.cc/paper_files/paper/2024/hash/f271a36160097fbdb06a9adeb1605343-Abstract-Conference.html" target="_blank" rel="noopener">Understanding the Differences in Foundation Models: Attention, SSMs, and RNNs</a></div><div class="pub-meta">Sieber*, Amo Alonso*, Didier, Zeilinger, Orvieto — NeurIPS, 2024</div><div class="pub-links"><a href="https://github.com/jsie7/ssm-benchmark" target="_blank" rel="noopener">Code</a> · <a href="https://arxiv.org/abs/2405.15731" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://ieeexplore.ieee.org/document/10801425" target="_blank" rel="noopener">NARRATE: Versatile Language Architecture for Optimal Control in Robotics</a></div><div class="pub-meta">Ismail*, Arbues*, Cotterell, Zurbrügg, Amo Alonso — IROS, 2024</div><div class="pub-links"><a href="https://narrate-mpc.github.io" target="_blank" rel="noopener">Website</a> · <a href="https://www.youtube.com/watch?v=8__CQMCkdws" target="_blank" rel="noopener">Video</a> · <a href="https://github.com/vateseif/narrate" target="_blank" rel="noopener">Code</a> · <a href="https://arxiv.org/abs/2403.10762" target="_blank" rel="noopener">Paper</a></div></div>
+        </div></div>
+      </div>
+      <div class="pub-group" data-group tabindex="0">
+        <div class="pub-group-head"><span class="pub-group-title">2023</span></div>
+        <div class="pub-group-body"><div class="pub-list">
+          <div class="pub-row"><div class="pub-title"><a href="https://thesis.library.caltech.edu/15262/" target="_blank" rel="noopener">Distributed and Localized Model Predictive Control</a></div><div class="pub-meta">Amo Alonso — Caltech Ph.D. Thesis, 2023</div><div class="pub-links"><a href="https://www.youtube.com/watch?v=X6AiGiXdxhQ" target="_blank" rel="noopener">Video</a> · <a href="https://github.com/unstable-zeros/dl-mpc-sls" target="_blank" rel="noopener">Code</a> · <a href="https://thesis.library.caltech.edu/15262/" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://ieeexplore.ieee.org/document/10229197" target="_blank" rel="noopener">Global Performance Guarantees for Localized Model Predictive Control</a></div><div class="pub-meta">Li, Amo Alonso — IEEE Open Journal of Control Systems, 2023</div><div class="pub-links"><a href="https://www.youtube.com/watch?v=X6AiGiXdxhQ&t=2073s" target="_blank" rel="noopener">Video</a> · <a href="https://github.com/flyingpeach/LocalizedMPCPerformance" target="_blank" rel="noopener">Code</a> · <a href="https://arxiv.org/abs/2303.11264" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://ieeexplore.ieee.org/document/10083211" target="_blank" rel="noopener">Distributed and Localized Model Predictive Control, Part II: Theoretical Guarantees</a> <span class="pub-badge">Best Paper</span></div><div class="pub-meta">Amo Alonso, Li, Anderson, Matni — IEEE Trans. on Control of Network Systems, 2023</div><div class="pub-links"><a href="https://youtu.be/X6AiGiXdxhQ?t=1291" target="_blank" rel="noopener">Video</a> · <a href="https://github.com/unstable-zeros/dl-mpc-sls/tree/master/2022_TNCS_DLMPC-Part-II" target="_blank" rel="noopener">Code</a> · <a href="https://arxiv.org/abs/2203.00780" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://ieeexplore.ieee.org/document/9939038" target="_blank" rel="noopener">Distributed and Localized Model Predictive Control, Part I: Synthesis and Implementation</a></div><div class="pub-meta">Amo Alonso, Li, Anderson, Matni — IEEE Trans. on Control of Network Systems, 2023</div><div class="pub-links"><a href="https://youtu.be/X6AiGiXdxhQ?t=326" target="_blank" rel="noopener">Video</a> · <a href="https://github.com/unstable-zeros/dl-mpc-sls/tree/master/2022_TNCS_DLMPC-Part-I" target="_blank" rel="noopener">Code</a> · <a href="https://arxiv.org/abs/2110.07010" target="_blank" rel="noopener">Paper</a></div></div>
+        </div></div>
+      </div>
+      <div class="pub-group" data-group tabindex="0">
+        <div class="pub-group-head"><span class="pub-group-title">2022</span></div>
+        <div class="pub-group-body"><div class="pub-list">
+          <div class="pub-row"><div class="pub-title"><a href="https://ieeexplore.ieee.org/document/9831839" target="_blank" rel="noopener">Effective GPU Parallelization of Distributed &amp; Localized MPC</a> <span class="pub-badge">Best Student Paper</span></div><div class="pub-meta">Amo Alonso, Tseng — IEEE Int'l Conf. on Control &amp; Automation, 2022</div><div class="pub-links"><a href="https://www.youtube.com/watch?v=X6AiGiXdxhQ&t=2295s" target="_blank" rel="noopener">Video</a> · <a href="https://github.com/camoalon/DLMPC-GPU" target="_blank" rel="noopener">Code</a> · <a href="https://arxiv.org/abs/2103.14990" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://ieeexplore.ieee.org/document/9772975" target="_blank" rel="noopener">Data-Driven Distributed and Localized Model Predictive Control</a></div><div class="pub-meta">Amo Alonso*, Yang*, Matni — IEEE Open Journal of Control Systems, 2022</div><div class="pub-links"><a href="https://youtu.be/X6AiGiXdxhQ?t=2624" target="_blank" rel="noopener">Video</a> · <a href="https://github.com/unstable-zeros/dl-mpc-sls/tree/master/2022_OJCS_DataDriven-DLMPC" target="_blank" rel="noopener">Code</a> · <a href="https://arxiv.org/abs/2112.12229" target="_blank" rel="noopener">Paper</a></div></div>
+        </div></div>
+      </div>
+      <div class="pub-group" data-group tabindex="0">
+        <div class="pub-group-head"><span class="pub-group-title">2021</span></div>
+        <div class="pub-group-body"><div class="pub-list">
+          <div class="pub-row"><div class="pub-title"><a href="https://ieeexplore.ieee.org/document/9483130" target="_blank" rel="noopener">Frontiers in Scalable Distributed Control: SLS, MPC, and Beyond</a></div><div class="pub-meta">Li, Amo Alonso, Doyle — IEEE ACC, 2021</div><div class="pub-links"><a href="https://arxiv.org/abs/2010.01292" target="_blank" rel="noopener">Paper</a></div></div>
+        </div></div>
+      </div>
+      <div class="pub-group" data-group tabindex="0">
+        <div class="pub-group-head"><span class="pub-group-title">2020</span></div>
+        <div class="pub-group-body"><div class="pub-list">
+          <div class="pub-row"><div class="pub-title"><a href="https://ieeexplore.ieee.org/document/9304349" target="_blank" rel="noopener">Explicit Distributed and Localized Model Predictive Control via System Level Synthesis</a></div><div class="pub-meta">Amo Alonso, Anderson, Matni — IEEE CDC, 2020</div><div class="pub-links"><a href="https://www.youtube.com/watch?v=IhtuGZp8QM0" target="_blank" rel="noopener">Video</a> · <a href="https://github.com/unstable-zeros/dl-mpc-sls/tree/master/2020_CDC_Explicit-DLMPC" target="_blank" rel="noopener">Code</a> · <a href="https://arxiv.org/abs/2005.13807" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://ieeexplore.ieee.org/document/9303936" target="_blank" rel="noopener">Distributed and Localized Model Predictive Control via System Level Synthesis</a></div><div class="pub-meta">Amo Alonso, Matni — IEEE CDC, 2020</div><div class="pub-links"><a href="https://www.youtube.com/watch?v=mF2Wbriy2Zg" target="_blank" rel="noopener">Video</a> · <a href="https://github.com/unstable-zeros/dl-mpc-sls/tree/master/2020_CDC_DLMPC" target="_blank" rel="noopener">Code</a> · <a href="https://arxiv.org/abs/1909.10074" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://ieeexplore.ieee.org/document/9304369" target="_blank" rel="noopener">System Level Synthesis via Dynamic Programming</a></div><div class="pub-meta">Tseng, Amo Alonso, Han — IEEE CDC, 2020</div><div class="pub-links"><a href="https://arxiv.org/abs/2004.12567" target="_blank" rel="noopener">Paper</a></div></div>
+          <div class="pub-row"><div class="pub-title"><a href="https://www.sciencedirect.com/science/article/pii/S240589632031377X" target="_blank" rel="noopener">Distributed Linear Quadratic Regulator Robust to Communication Dropouts</a></div><div class="pub-meta">Amo Alonso, Ho, Maestre — IFAC World Congress, 2020</div><div class="pub-links"><a href="https://www.youtube.com/watch?v=EwIXnquVmS0" target="_blank" rel="noopener">Video</a> · <a href="https://arxiv.org/abs/2103.03967" target="_blank" rel="noopener">Paper</a></div></div>
+        </div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="brand">
+        <img src="assets/logo/logo-brain.png" alt="" width="30" height="26" class="brand-mark">
+        <span class="brand-text">
+          <span>Control and Intelligent Systems Lab</span>
+          <a class="brand-sub" href="https://eecs.berkeley.edu" target="_blank" rel="noopener">UC Berkeley · EECS</a>
+        </span>
+      </div>
+      <ul class="footer-links">
+        <li><a href="https://github.com/camoalon" data-social="github" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="#" data-social="youtube" target="_blank" rel="noopener">YouTube</a></li>
+        <li><a href="join.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-fine">© 2026 Control and Intelligent Systems Lab, UC Berkeley. The use of any content on this site for training generative models is not authorized.</div>
+  </div>
+</footer>
+
+<style>
+  .pub-row{ padding:16px 0; border-top:1px solid var(--line); display:grid; grid-template-columns:1fr auto; column-gap:20px; align-items:center; }
+  .pub-list .pub-row:last-child{border-bottom:1px solid var(--line);}
+  .pub-title{grid-column:1; grid-row:1; font-size:15.5px; color:var(--ink); font-weight:500;}
+  .pub-title a{color:inherit; text-decoration:none;}
+  .pub-title a:hover{color:var(--blue); text-decoration:underline;}
+  .pub-meta{grid-column:1; grid-row:2; font-family:var(--mono); font-size:12.5px; color:var(--ink-soft); margin-top:4px;}
+  .pub-links{grid-column:2; grid-row:1 / span 2; font-family:var(--mono); font-size:11.5px; color:var(--ink-soft); white-space:nowrap; text-align:right;}
+  .pub-links a{color:var(--blue);}
+  .pub-links a:hover{text-decoration:underline;}
+  @media (max-width:640px){
+    .pub-row{ grid-template-columns:1fr; row-gap:4px; }
+    .pub-links{ grid-column:1; grid-row:3; text-align:left; white-space:normal; }
+  }
+  .pub-badge{ font-family:var(--mono); font-size:10.5px; color:var(--gold); white-space:nowrap;
+    border:1px solid var(--gold-soft); background:var(--gold-soft); padding:2px 8px; border-radius:999px; margin-left:8px;}
+
+  .pub-tabs{ display:flex; gap:28px; margin:24px 0 4px 0; border-bottom:1px solid var(--line); }
+  .pub-tab{ font-family:var(--mono); font-size:12.5px; text-transform:uppercase; letter-spacing:0.05em;
+    color:var(--ink-soft); background:none; border:none; cursor:pointer; padding:0 0 12px 0;
+    border-bottom:2px solid transparent; margin-bottom:-1px; white-space:nowrap;
+    appearance:none; -webkit-appearance:none; width:auto; min-width:0; display:inline-block; }
+  .pub-tab.active{ color:var(--ink); border-bottom-color:var(--gold); }
+  .pub-groups{ display:flex; flex-direction:column; border-bottom:1px solid var(--line); }
+  #pubYear{ overflow-y:auto; transition:max-height .2s ease; }
+  .pub-group{ padding:14px 4px; cursor:pointer; }
+  .pub-group-title{ font-family:var(--display); font-weight:700; font-size:23px; color:var(--ink); transition:color .15s ease; }
+  .pub-group-body{ max-height:0; overflow:hidden; transition:max-height .3s ease; }
+  .pub-group.active .pub-group-body{ max-height:3000px; }
+  .pub-group.active .pub-group-title{ color:var(--blue); }
+  .pub-groups .pub-list .pub-row:first-child{ margin-top:8px; }
+</style>
+
+<script src="script.js"></script>
+<script>
+  const levels = document.querySelectorAll('.level');
+  const ringImages = {
+    'ring-ai': 'assets/AI-figure/ai-system.png',
+    'ring-deep': 'assets/AI-figure/deep-architecture.png',
+    'ring-layer': 'assets/AI-figure/single-layer.png',
+    'ring-surround': 'assets/AI-figure/mixer-scaffolding.png',
+    'ring-mixer': 'assets/AI-figure/token-mixer.png',
+  };
+  function activate(level){
+    const img = document.getElementById('granularityImg');
+    const wasActive = level.classList.contains('active');
+    levels.forEach(l=>l.classList.remove('active'));
+    if(wasActive){
+      if(img){ img.src = 'assets/AI-figure/full.png'; }
+      return;
+    }
+    level.classList.add('active');
+    const target = level.getAttribute('data-ring');
+    if(img && ringImages[target]){ img.src = ringImages[target]; }
+  }
+  levels.forEach(l=>{
+    l.addEventListener('click', ()=>activate(l));
+    l.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); activate(l);} });
+  });
+</script>
+<script>
+(function(){
+  const displayImg = document.getElementById('granularityImg');
+  if(!displayImg) return;
+
+  // hidden reference image (always the fully-tinted composite) used purely for color-based hit-testing
+  const hit = new Image();
+  hit.src = 'assets/AI-figure/full.png';
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d', { willReadFrequently: true });
+  let ready = false;
+
+  function prepare(){
+    canvas.width = hit.naturalWidth;
+    canvas.height = hit.naturalHeight;
+    try{ ctx.drawImage(hit, 0, 0); ready = true; } catch(e){ ready = false; console.warn('granularity hit-test: canvas blocked', e); }
+  }
+  if(hit.complete && hit.naturalWidth){ prepare(); }
+  else { hit.addEventListener('load', prepare); }
+
+  const zones = [
+    { ring:'ring-ai', color:[59,86,145] },
+    { ring:'ring-deep', color:[141,119,68] },
+    { ring:'ring-layer', color:[135,64,126] },
+    { ring:'ring-surround', color:[83,143,82] },
+    { ring:'ring-mixer', color:[130,130,130] },
+  ];
+
+  function closestZone(r,g,b){
+    let best = null, bestDist = Infinity;
+    zones.forEach(z=>{
+      const dr=r-z.color[0], dg=g-z.color[1], db=b-z.color[2];
+      const d = Math.sqrt(dr*dr + dg*dg + db*db);
+      if(d < bestDist){ bestDist = d; best = z; }
+    });
+    return bestDist < 45 ? best : null;
+  }
+
+  displayImg.style.cursor = 'pointer';
+  displayImg.addEventListener('click', (e)=>{
+    if(!ready) return;
+    const rect = displayImg.getBoundingClientRect();
+    const x = Math.floor((e.clientX - rect.left) * (canvas.width / rect.width));
+    const y = Math.floor((e.clientY - rect.top) * (canvas.height / rect.height));
+    if(x < 0 || y < 0 || x >= canvas.width || y >= canvas.height) return;
+    try{
+      const p = ctx.getImageData(x, y, 1, 1).data;
+      const zone = closestZone(p[0], p[1], p[2]);
+      if(zone){
+        const li = document.querySelector('.level[data-ring="'+zone.ring+'"]');
+        if(li){ activate(li); }
+      } else {
+        levels.forEach(l=>l.classList.remove('active'));
+        displayImg.src = 'assets/AI-figure/full.png';
+      }
+    } catch(err){ console.warn('granularity hit-test: pixel read blocked', err); }
+  });
+})();
+</script>
+<script>
+(function(){
+  const tabs = document.querySelectorAll('.pub-tab');
+  const views = { granularity: document.getElementById('pubGranularity'), year: document.getElementById('pubYear') };
+
+  function syncYearHeight(){
+    const gran = views.granularity, year = views.year;
+    if(!gran || !year) return;
+    const wasHidden = gran.style.display === 'none';
+    if(wasHidden){ gran.style.display = ''; }
+    const h = gran.offsetHeight;
+    if(wasHidden){ gran.style.display = 'none'; }
+    year.style.maxHeight = h + 'px';
+  }
+
+  tabs.forEach(tab=>{
+    tab.addEventListener('click', ()=>{
+      tabs.forEach(t=>t.classList.remove('active'));
+      tab.classList.add('active');
+      const view = tab.getAttribute('data-view');
+      Object.entries(views).forEach(([key, el])=>{
+        if(!el) return;
+        el.style.display = key === view ? '' : 'none';
+      });
+      syncYearHeight();
+    });
+  });
+
+  function toggleGroup(group){
+    group.classList.toggle('active');
+    setTimeout(syncYearHeight, 320);
+  }
+  document.querySelectorAll('.pub-group').forEach(group=>{
+    group.addEventListener('click', ()=>toggleGroup(group));
+    group.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); toggleGroup(group);} });
+  });
+
+  window.addEventListener('resize', syncYearHeight);
+  syncYearHeight();
+
+  document.querySelectorAll('.see-papers').forEach(link=>{
+    link.addEventListener('click', (e)=>{
+      e.preventDefault();
+      const ring = link.getAttribute('data-target-ring');
+      const target = document.getElementById('pub-' + ring);
+      if(!target) return;
+      const granTab = document.querySelector('.pub-tab[data-view="granularity"]');
+      if(granTab && !granTab.classList.contains('active')){ granTab.click(); }
+      target.classList.add('active');
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+})();
+</script>
+</body>
+</html>
