@@ -2,8 +2,8 @@
 // and in-page resource cards (e.g. join.html "Resource access"). Update the
 // URL here once and every [data-social] link on the site picks it up.
 const SOCIAL_LINKS = {
-  github: 'https://github.com/camoalon',
-  youtube: 'https://www.youtube.com/@carmenamoalonso2865'
+  github: 'https://github.com/ucb-control-intelligence-systems-lab',
+  youtube: 'https://www.youtube.com/channel/UC4SEVhgzDmUEG7NVm2mjdPA'
 };
 
 // Scroll reveal
