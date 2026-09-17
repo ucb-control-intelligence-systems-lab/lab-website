@@ -378,6 +378,10 @@
     'ring-surround': 'assets/AI-figure/mixer-scaffolding.png',
     'ring-mixer': 'assets/AI-figure/token-mixer.png',
   };
+  // Warm the browser cache for every ring image right away so clicking a level
+  // swaps instantly instead of waiting on a fresh network request the first time.
+  Object.values(ringImages).forEach(src => { const pre = new Image(); pre.src = src; });
+
   function activate(level){
     const img = document.getElementById('granularityImg');
     const wasActive = level.classList.contains('active');
