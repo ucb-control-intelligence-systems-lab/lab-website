@@ -56,8 +56,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const video = s.querySelector('video');
         if (!video) return;
         if (si === index) {
+          video.muted = true; // belt-and-suspenders: some browsers (Safari) only
+                               // honor autoplay on the muted *property*, not just
+                               // the markup attribute.
           const startPlay = () => video.play().catch(() => {});
-          video.currentTime = 0;
+          // Setting currentTime before the browser has loaded any metadata can
+          // throw (InvalidStateError) in some browsers, which would otherwise
+          // abort this whole block and leave the video frozen on its poster/
+          // first frame with playback never attempted. Guard it so a throw here
+          // can't prevent the play() call below.
+          try { video.currentTime = 0; } catch (e) {}
           // 'seeked' doesn't fire reliably in every browser/case (e.g. currentTime
           // was already 0, or the event just gets dropped), so don't gate playback
           // behind it exclusively — try right away too. Calling play() twice is
